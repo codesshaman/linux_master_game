@@ -1,3 +1,4 @@
 .vagrant
 .vagrantboxes
 debian
+game/output.log
