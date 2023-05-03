@@ -14,20 +14,28 @@ fi
 if [ "$lang" == "en" ]; then
     compath="lang/en/level0.md"
 fi
+disp0="$(grep display0 $compath | sed -r 's/.{,10}//')"
+disp1="$(grep display1 $compath | sed -r 's/.{,10}//')"  
+disp2="$(grep display2 $compath | sed -r 's/.{,10}//')"
+disp3="$(grep display3 $compath | sed -r 's/.{,10}//')"
 compare() {
-    comment="$(grep "comment${count}" $compath | sed -r 's/.{,11}//')"
-    command="$(grep "command${count}" $compath | sed -r 's/.{,11}//')"
-    success="$(grep "success${count}" $compath | sed -r 's/.{,11}//')"
-    failure="$(grep "failure${count}" $compath | sed -r 's/.{,11}//')"
+    comment="$(grep "comment${count}" $compath | sed -r 's/.{,12}//')"
+    command="$(grep "command${count}" $compath | sed -r 's/.{,12}//')"
+    success="$(grep "success${count}" $compath | sed -r 's/.{,12}//')"
+    failure="$(grep "failure${count}" $compath | sed -r 's/.{,12}//')"
     # echo "$command $success "
 }
 cycle() {
     compare
     read -p "$comment" input
-    if [ $input == $command ]; then
+    comm=$(echo "$input" | cut -d ' ' -f 1)
+    echo -e "$purp$disp0$no $blue$input$no"
+    if [ $comm == $command ]; then
+        echo -e "$cyan$disp1$no $ok$command$no"
         count=$(( $count + 1 ))
         name=$($command)
-        echo -e $warn$name$no
+        echo -e "$blue$disp2$no"
+        echo -e "$warn$name$no"
         echo -e "$ok$success$no"
     else
         name=$($input)
